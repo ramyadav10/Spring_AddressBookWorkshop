@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mastercode.abs.dto.AddressDTO;
 import com.mastercode.abs.dto.ResponseDTO;
 
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+
 
 
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/address") @Slf4j
 public class AddressBookController {
 
 	private List<AddressDTO> list=new ArrayList<AddressDTO>();
@@ -32,7 +32,7 @@ public class AddressBookController {
 	
 	@GetMapping
 	private ResponseEntity<ResponseDTO> getAll() {
-		Log.info("get all data");
+		log.info("get all data");
 		ResponseDTO dto=new ResponseDTO("get all call successful",list);
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
@@ -42,7 +42,7 @@ public class AddressBookController {
 		AddressData.setId(atomicLong.incrementAndGet());
 		list.add(AddressData);
 		ResponseDTO dto=new ResponseDTO("post call successful", AddressData);
-		Log.info("data inserted.");
+		log.info("data inserted.");
 		return new ResponseEntity<>(dto,HttpStatus.CREATED);
 	}
 	
@@ -50,7 +50,7 @@ public class AddressBookController {
 	private ResponseEntity<ResponseDTO> getById(@PathVariable int id){
 		AddressDTO data =list.stream().filter(e->e.getId()==id).findFirst().get();
 		ResponseDTO dto=new ResponseDTO("get id call successful", data);
-		Log.info("data is retrived with id ->"+id);
+		log.info("data is retrived with id ->"+id);
 		return new ResponseEntity<>(dto,HttpStatus.FOUND);
 	}
 	
@@ -61,7 +61,7 @@ public class AddressBookController {
 		updateData.setAddress(addressData.getAddress());
 		updateData.setZip(addressData.getZip());
 		ResponseDTO dto=new ResponseDTO("put call successful", updateData);
-		Log.info("data updated with id ->"+id);
+		log.info("data updated with id ->"+id);
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 	
