@@ -3,6 +3,8 @@ package com.mastercode.abs.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +49,7 @@ public class AddressBookController {
 	
 	
 	@PostMapping("/insert") 
-	public ResponseEntity<ResponseDTO> addRecord(@RequestBody AddressBookDTO addressbookdto) //throws CustomException
+	public ResponseEntity<ResponseDTO> addRecord(@Valid @RequestBody AddressBookDTO addressbookdto) //throws CustomException
 	{
 			log.info("Inserting data into AddressBook database");
 			AddressBookEntity entity = addressbookservice.insertRecord(addressbookdto);
@@ -57,7 +59,7 @@ public class AddressBookController {
 	
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<ResponseDTO> updateRecords(@RequestBody AddressBookDTO addressbookdto,@PathVariable int id)
+	public ResponseEntity<ResponseDTO> updateRecords(@Valid @RequestBody AddressBookDTO addressbookdto,@PathVariable int id)
 	{
 		AddressBookEntity entity = addressbookservice.updateRecord(id, addressbookdto);
 		log.info("Record updated for id: " + id);
